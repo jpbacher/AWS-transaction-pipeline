@@ -8,18 +8,20 @@ PROJ_ROOT = os.path.join(os.pardir)
 data_path = os.path.join(PROJ_ROOT, 'data', 'train.csv')
 
 
-def convert_json_to_api(filepath, columns, url):
+def convert_json_to_api(filepath, columns, url, header_row=True):
     """Converts csv file to json document and sends to API.
 
     Args:
         filepath (string): file path to the csv
         columns (list): list of column names
         url (string): url to API endpoint
+        header_row (boolean): whether file has a header row
     """
     with open(filepath, "r") as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=columns)
         # skip first row of column names
-        next(reader)
+        if header_row:
+            next(reader)
         for row in reader:
             # convert columns to correct data types
             doc = {
@@ -80,7 +82,7 @@ def main():
                "merch_long",
                "is_fraud"]
     url = " "
-    convert_json_to_api(filepath=data_path, columns=columns, url=url)
+    convert_json_to_api(filepath=data_path, columns=columns, url=url, header_row=True)
     
     
 if __name__ == '__main__':
