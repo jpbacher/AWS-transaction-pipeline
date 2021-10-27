@@ -9,9 +9,9 @@ def lambda_handler(event, context):
     
     client = boto3.client('kinesis')
     response = client.put_record(
-        StreamName='',
+        StreamName='cc-trans-kinesis-stream',
         Data=trans_json,
-        PartitionKey=''
+        PartitionKey='string'
     )
         
     return {
