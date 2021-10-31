@@ -27,10 +27,6 @@ def put_transaction(cc_num,
     
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('cc_transactions')
-    
-    # decode kinesis data
-    #decoded_data = [base64.b64decode(record["kineses"]["data"]) for record in event["Records"]]
-    #deserialized_data = [json.loads(decoded_record) for decoded_record in decoded_data]
 
     response = table.put_item(
         Item={
@@ -67,27 +63,30 @@ def put_transaction(cc_num,
 def lambda_handler(event, context):
     
     for record in event['Records']:
+        # decode kinesis data
+        decoded_record = base64.b64decode(record["kinesis"]["data"])
+        deserialized_record = json.loads(decoded_record)
         trans_response = put_transaction(
-            record['cc_num'],
-            record['trans_date_trans_time'],
-            record['trans_num'],
-            record['amt'],
-            record['merchant'],
-            record['is_fraud'],
-            record['first'],
-            record['last'],
-            record['gender'],
-            record['dob'],
-            record['job'],
-            record['street'],
-            record['city'],
-            record['state'],
-            record['zip'],
-            record['lat'],
-            record['long'],
-            record['city_pop'],
-            record['category'],
-            record['merch_lat'],
-            record['merch_long']
+            deserialized_record['cc_num'],
+            deserialized_record['trans_date_trans_time'],
+            deserialized_record['trans_num'],
+            deserialized_record['amt'],
+            deserialized_record['merchant'],
+            deserialized_record['is_fraud'],
+            deserialized_record['first'],
+            deserialized_record['last'],
+            deserialized_record['gender'],
+            deserialized_record['dob'],
+            deserialized_record['job'],
+            deserialized_record['street'],
+            deserialized_record['city'],
+            deserialized_record['state'],
+            deserialized_record['zip'],
+            deserialized_record['lat'],
+            deserialized_record['long'],
+            deserialized_record['city_pop'],
+            deserialized_record['category'],
+            deserialized_record['merch_lat'],
+            deserialized_record['merch_long']
         )
         print(trans_response)
