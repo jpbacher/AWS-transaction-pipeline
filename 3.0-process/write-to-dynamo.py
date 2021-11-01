@@ -67,7 +67,7 @@ def lambda_handler(event, context):
         decoded_record = base64.b64decode(record["kinesis"]["data"])
         # decode bytes into a str
         str_record = str(decoded_record, 'utf-8')
-        # transform string into a dict
+        # transform string into a dictionary
         deserialized_record = json.loads(str_record)
         
         trans_response = put_transaction(
