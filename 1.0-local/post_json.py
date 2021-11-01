@@ -1,11 +1,13 @@
+import os 
+import configparser
 import csv
 import json
-import os 
 import requests
 
 
 PROJ_ROOT = os.path.join(os.pardir)
 data_path = os.path.join(PROJ_ROOT, 'data', 'train.csv')
+config_file = os.path.join(PROJ_ROOT, 'aws.cfg')
 
 
 def convert_json_to_api(filepath, columns, url, header_row=True):
@@ -15,7 +17,7 @@ def convert_json_to_api(filepath, columns, url, header_row=True):
         filepath (string): file path to the csv
         columns (list): list of column names
         url (string): url to API endpoint
-        header_row (boolean): whether file has a header row
+        header_row (boolean): whether csv file has a header row
     """
     with open(filepath, "r") as csvfile:
         reader = csv.DictReader(csvfile, fieldnames=columns)
@@ -53,13 +55,13 @@ def convert_json_to_api(filepath, columns, url, header_row=True):
             json_doc = json.dumps(doc) 
             # send to API
             response = requests.post(url, data=json_doc)
-            #resp = json.loads(response.content)
-            #body = resp["body"]
             print(response)
-            #print(f'{body}\n')
             
             
 def main():
+    
+    config = configparser.ConfigParser()
+    config.read_file(open(config_file))
     
     columns = ["record_no",
                "trans_date_trans_time",
@@ -84,7 +86,8 @@ def main():
                "merch_lat",
                "merch_long",
                "is_fraud"]
-    url_api = "https://sam41wsara.execute-api.us-east-2.amazonaws.com/prod"
+    url_api = config.get('API', 'URL')
+    
     convert_json_to_api(filepath=data_path, columns=columns, url=url_api, header_row=True)
     
     
