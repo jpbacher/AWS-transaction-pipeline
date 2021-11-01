@@ -1,5 +1,4 @@
 import os 
-import configparser
 import csv
 import json
 import requests
@@ -60,9 +59,6 @@ def convert_json_to_api(filepath, columns, url, header_row=True):
             
 def main():
     
-    config = configparser.ConfigParser()
-    config.read_file(open(config_file))
-    
     columns = ["record_no",
                "trans_date_trans_time",
                "cc_num",
@@ -86,7 +82,7 @@ def main():
                "merch_lat",
                "merch_long",
                "is_fraud"]
-    url_api = config.get('API', 'URL')
+    url_api = 'https://0jjopxnuia.execute-api.us-east-2.amazonaws.com/prod'
     
     convert_json_to_api(filepath=data_path, columns=columns, url=url_api, header_row=True)
     
