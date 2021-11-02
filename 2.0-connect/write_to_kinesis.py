@@ -11,7 +11,7 @@ def lambda_handler(event, context):
     response = client.put_record(
         StreamName='cc-trans-kinesis-stream',
         Data=trans_json,
-        PartitionKey='string'
+        PartitionKey='string' # distribute data among shards 
     )
         
     return {
