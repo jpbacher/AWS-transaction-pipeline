@@ -18,12 +18,13 @@ def lambda_handler(event, context):
         # decode kinesis data
         decoded_record = base64.b64decode(record["kinesis"]["data"])
         trans_records.append(decoded_record)
-    # convert list to string
+    
     event_count = len(trans_records)
+    # convert list to string
     trans_records_str = '/n'.join(map(str, trans_records))
     # file with a timestamp
-    file = f'{time_str}-transaction.txt'
+    timestamp_file = f'{time_str}-transaction.txt'
     # send file to s3
-    response = s3.put_object(Body=trans_records_str, Bucket='s3-transactions', Key=cc_key)
+    response = s3.put_object(Body=trans_records_str, Bucket='s3-transactions', Key=timestamp_file)
     
     return f'Successfully placed {len(event_count)} records into s3' 
