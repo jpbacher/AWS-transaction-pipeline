@@ -23,7 +23,9 @@ def convert_json_to_api(filepath, columns, url, header_row=True):
         # skip first row of column names
         if header_row:
             next(reader)
-        for row in reader:
+        for i, row in enumerate(reader):
+            if i > 10:
+                break
             # convert columns to correct data types
             doc = {
                 "record_no": int(row["record_no"]),
