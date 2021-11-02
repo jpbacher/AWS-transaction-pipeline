@@ -82,7 +82,7 @@ def main():
                "merch_lat",
                "merch_long",
                "is_fraud"]
-    url_api = 'https://0jjopxnuia.execute-api.us-east-2.amazonaws.com/prod'
+    url_api = 'https://0jjopxnuia.execute-api.us-east-2.amazonaws.com/prod/transactions'
     
     convert_json_to_api(filepath=data_path, columns=columns, url=url_api, header_row=True)
     
