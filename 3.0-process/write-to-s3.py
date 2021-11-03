@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 time_now = datetime.now()
-time_str = time_now.strftime('%Y/%m/%d, %H/%M/%S')
+time_str = time_now.strftime('%Y/%m/%d-%H/%M/%S')
 
 s3 = boto3.client('s3')
 
