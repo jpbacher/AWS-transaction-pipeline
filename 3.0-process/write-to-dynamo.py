@@ -1,3 +1,4 @@
+from decimal import Decimal
 import base64
 import json
 import boto3
@@ -68,7 +69,7 @@ def lambda_handler(event, context):
         # decode bytes into a str
         str_record = str(decoded_record, 'utf-8')
         # transform string into a dictionary
-        deserialized_record = json.loads(str_record)
+        deserialized_record = json.loads(str_record, parse_float=Decimal)
         
         trans_response = put_transaction(
             deserialized_record['cc_num'],
