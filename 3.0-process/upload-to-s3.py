@@ -15,7 +15,7 @@ date_now = datetime.now()
 time_stamp_str = date_now.strftime("%Y/%m/%d-%H:%M:%S")
 
 def upload_file(access_key, secret_key, file_path, bucket, s3_obj_name):
-    """[summary]
+    """Upload local file to s3 bucket
 
     Args:
         access_key: AWS access key
@@ -23,9 +23,7 @@ def upload_file(access_key, secret_key, file_path, bucket, s3_obj_name):
         file_path (string]): file path to file on local computer
         bucket (string): bucket name created on AWS console
         s3_obj_name (string): name of file appearing on AWS 
-
-    Returns:
-        [type]: [description]
+        
     """
     
     session = boto3.Session(
